@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.5' // Spring Boot 플러그인
+    id 'io.spring.dependency-management' version '1.1.7' // 의존성 버전 통일 관리
+}
+
+group = 'kernel360'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17) // Java 17 사용
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor // annotationProcessor도 compileOnly에 포함
+    }
+}
+
+repositories {
+    mavenCentral() // 중앙 저장소
+}
+
+dependencies {
+    // Spring Data JPA: ORM 기능 (Hibernate) 제공
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Spring Security: 인증/인가 보안 기능 제공
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Bean Validation (JSR-380) 지원: @Valid, @NotNull 등
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring MVC (REST API 개발)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Lombok: Getter, Setter, Constructor 자동 생성 (빌드 시 필요)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 인메모리 DB - 개발/테스트 용도
+    runtimeOnly 'com.h2database:h2'
+
+    // MySQL 드라이버 - 운영용 DB
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 테스트용 스프링 부트 스타터
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // 스프링 시큐리티 테스트 도구 (@WithMockUser 등)
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // JUnit 플랫폼 런처 (필요 시 IDE 연동용)
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // JWT 토큰 관련 라이브러리 (API, 구현체, JSON 처리)
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5' // 내부 구현
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5' // Jackson 기반 JSON 직렬화/역직렬화
+
+    // OpenAPI 문서 자동 생성 UI (Swagger UI 포함)
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0"
+}
+
+tasks.named('test') {
+    useJUnitPlatform() // JUnit 5 사용
+}
