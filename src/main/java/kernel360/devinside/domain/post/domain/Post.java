@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import kernel360.devinside.common.BaseEntity;
 import kernel360.devinside.domain.user.domain.User;
 import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
