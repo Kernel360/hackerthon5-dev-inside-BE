@@ -4,9 +4,9 @@ import kernel360.devinside.domain.comment.domain.Comment;
 import kernel360.devinside.domain.comment.dto.CommentRequest;
 import kernel360.devinside.domain.comment.repository.CommentRepository;
 import kernel360.devinside.domain.post.domain.Post;
-import kernel360.devinside.domain.post.domain.PostRepository;
+import kernel360.devinside.domain.post.repository.PostRepository;
 import kernel360.devinside.domain.user.domain.User;
-import kernel360.devinside.domain.user.domain.UserRepository;
+import kernel360.devinside.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
