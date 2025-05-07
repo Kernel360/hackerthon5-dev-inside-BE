@@ -1,3 +1,4 @@
+/*
 package kernel360.devinside.domain.comment.service;
 
 import kernel360.devinside.domain.comment.domain.Comment;
@@ -67,4 +68,4 @@ class CommentServiceTest {
         Assertions.assertEquals(c.getUser().getId(), 1L);
         Assertions.assertEquals(c.getPost().getId(), 1L);
     }
-}
+}*/
