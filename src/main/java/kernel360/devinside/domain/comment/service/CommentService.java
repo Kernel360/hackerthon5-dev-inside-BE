@@ -2,6 +2,7 @@ package kernel360.devinside.domain.comment.service;
 
 import kernel360.devinside.domain.comment.domain.Comment;
 import kernel360.devinside.domain.comment.dto.CommentRequest;
+import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
 import kernel360.devinside.domain.comment.repository.CommentRepository;
 import kernel360.devinside.domain.post.domain.Post;
 import kernel360.devinside.domain.post.repository.PostRepository;
@@ -9,16 +10,16 @@ import kernel360.devinside.domain.user.domain.User;
 import kernel360.devinside.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 
     private final CommentRepository repository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
-
-
 
     //todo 추후 진짜 회원, 게시글 반영
     public void add(User user, Post post, CommentRequest request){
@@ -28,5 +29,14 @@ public class CommentService {
 
         Comment comment = new Comment(user1, post2, request);
         repository.save(comment);
+    }
+
+    public void update(Long id, CommentUpdateRequest request){
+        Comment comment = repository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 댓글입니다"));
+        comment.updateComment(request);
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
     }
 }
