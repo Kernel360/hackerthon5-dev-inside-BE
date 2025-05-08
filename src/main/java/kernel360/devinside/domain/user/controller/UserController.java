@@ -73,5 +73,14 @@ public class UserController {
 
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(
+            @AuthenticationPrincipal LoginUser loginUser
+    ) {
+        userService.delete(loginUser);
+        return ResponseEntity.ok().build();
+
+    }
+
 
 }
