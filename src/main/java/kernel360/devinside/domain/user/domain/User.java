@@ -2,6 +2,7 @@ package kernel360.devinside.domain.user.domain;
 
 import jakarta.persistence.*;
 import kernel360.devinside.common.BaseEntity;
+import kernel360.devinside.domain.post.domain.Post;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,6 +32,9 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String name, String nickname, Role role) {
