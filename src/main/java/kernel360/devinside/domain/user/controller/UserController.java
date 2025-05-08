@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final PostService postService;
     @Value("${cookie.valid-time}")
     private long COOKIE_VALID_TIME;
 
@@ -28,7 +27,6 @@ public class UserController {
     private String COOKIE_NAME;
 
     private final UserService userService;
-//    private final PostService postService;
 
     @PostMapping("/register")
     public ResponseEntity<UserSignupResponse> signup(@Valid @RequestBody UserSignupRequest request) {
