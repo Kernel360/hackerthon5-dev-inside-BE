@@ -49,8 +49,10 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public User findByToken(String email) {
-        return userRepository.findByEmail(email).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
+    public UserResponse findByToken(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+        UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getNickname(), user.getRole());
+        return userResponse;
     }
 
     @Transactional

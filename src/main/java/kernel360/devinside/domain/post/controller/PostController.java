@@ -54,6 +54,21 @@ public class PostController {
         return ResponseEntity.ok(postService.getPosts(postCategory, sortedPageable));
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<PostResponse<List<Post>>> getMyPosts(
+            @AuthenticationPrincipal LoginUser loginUser,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "DESC") String direction,
+            @PageableDefault(size = 10, page = 0) Pageable pageable) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(direction), sortBy);
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        return ResponseEntity.ok(postService.getPostsByUser(loginUser, sortedPageable));
+    }
+
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPost(
             @PathVariable

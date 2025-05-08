@@ -1,6 +1,7 @@
 package kernel360.devinside.domain.user.controller;
 
 import jakarta.validation.Valid;
+import kernel360.devinside.domain.post.service.PostService;
 import kernel360.devinside.domain.user.domain.LoginUser;
 import kernel360.devinside.domain.user.domain.User;
 import kernel360.devinside.domain.user.dto.*;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final PostService postService;
     @Value("${cookie.valid-time}")
     private long COOKIE_VALID_TIME;
 
@@ -26,6 +28,7 @@ public class UserController {
     private String COOKIE_NAME;
 
     private final UserService userService;
+//    private final PostService postService;
 
     @PostMapping("/register")
     public ResponseEntity<UserSignupResponse> signup(@Valid @RequestBody UserSignupRequest request) {
@@ -46,9 +49,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<UserResponse> getLoginResponse(@AuthenticationPrincipal LoginUser loginUser) {
-        String email = loginUser.getUsername();
-        User user = userService.findByToken(email);
-        UserResponse response = new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getRole());
+        UserResponse response = userService.findByToken(loginUser.id());
         return ResponseEntity.ok(response);
     }
 
@@ -81,6 +82,7 @@ public class UserController {
         return ResponseEntity.ok().build();
 
     }
+
 
 
 }
