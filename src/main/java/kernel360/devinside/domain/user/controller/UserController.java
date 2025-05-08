@@ -51,4 +51,27 @@ public class UserController {
         UserResponse response = new UserResponse(user.getId(), user.getEmail(), user.getName(), user.getRole());
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/update/nickname")
+    public ResponseEntity<UserUpdateResponse> updateNickname(
+            @AuthenticationPrincipal LoginUser loginUser,
+            @Valid @RequestBody UserNicknameUpdateRequest request
+    ) {
+
+        UserUpdateResponse response = userService.updateNickname(loginUser.id(), request.nickname());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/update/password")
+    public ResponseEntity<UserPasswordUpdateResponse> updatePassword(
+            @AuthenticationPrincipal LoginUser loginUser,
+            @Valid @RequestBody UserPasswordUpdateRequest request
+    ) {
+
+        UserPasswordUpdateResponse response = userService.updatePassword(loginUser.id(), request.password(), request.newPassword());
+        return ResponseEntity.ok(response);
+
+    }
+
+
 }
