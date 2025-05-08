@@ -88,6 +88,24 @@ public class PostService {
         return post;
     }
 
+    public PostResponse<List<Post>> getPostsByUser(LoginUser loginUser, Pageable pageable) {
+        Page<Post> list = postRepository.findAllByUserId(loginUser.id(), pageable);
+
+        Pagination pagination = Pagination.builder()
+                .page(list.getNumber())
+                .size(list.getSize())
+                .currentElements(list.getNumberOfElements())
+                .totalElements(list.getTotalElements())
+                .totalPage(list.getTotalPages())
+                .build();
+
+        return PostResponse.<List<Post>>builder()
+                .body(list.toList())
+                .pagination(pagination)
+                .build();
+    }
+
+
 
     public void delete(LoginUser loginUser, Long id) {
 
