@@ -12,6 +12,7 @@ public enum ErrorCode {
     // User Error
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     USER_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 존재하는 유저입니다."),
+    USER_PASSWORD_ERROR(HttpStatus.BAD_REQUEST, "햣비밀번호가 없습니다"),
 
     // Login Error
     USER_NOT_MATCH_LOGIN_INFO(HttpStatus.BAD_REQUEST, "로그인 정보에 해당하는 유저가 존재하지 않습니다."),
