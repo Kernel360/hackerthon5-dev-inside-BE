@@ -10,6 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,9 +26,14 @@ public class Comment extends BaseEntity {
     @JoinColumn(nullable = false, name = "post_id")
     private Post post;
 
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
 
-    private Long level;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> children = new ArrayList<>();
+
+    private String content;
 
     private boolean liked;
 
@@ -34,9 +42,13 @@ public class Comment extends BaseEntity {
     public Comment(User user, Post post, CommentRequest request) {
         this.user = user;
         this.post = post;
+        this.parent =request.parent();
         this.content = request.content();
-        this.level = request.level();
         this.liked = false;
         this.hated = false;
+    }
+
+    public void addChild(Comment child) {
+        children.add(child);
     }
 }

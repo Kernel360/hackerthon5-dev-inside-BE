@@ -2,8 +2,10 @@ package kernel360.devinside.domain.user.domain;
 
 import jakarta.persistence.*;
 import kernel360.devinside.common.BaseEntity;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class User extends BaseEntity {
 
     private String email;
