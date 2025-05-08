@@ -1,12 +1,15 @@
 package kernel360.devinside.domain.comment.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import kernel360.devinside.common.BaseEntity;
 import kernel360.devinside.domain.comment.dto.CommentRequest;
+import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
 import kernel360.devinside.domain.post.domain.Post;
 import kernel360.devinside.domain.user.domain.User;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,5 +41,9 @@ public class Comment extends BaseEntity {
         this.level = request.level();
         this.liked = false;
         this.hated = false;
+    }
+
+    public void updateComment(CommentUpdateRequest request) {
+        this.content = request.content();
     }
 }
