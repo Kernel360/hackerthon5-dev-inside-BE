@@ -3,9 +3,7 @@ package kernel360.devinside.domain.user.service;
 import kernel360.devinside.common.exception.CustomException;
 import kernel360.devinside.common.exception.ErrorCode;
 import kernel360.devinside.domain.user.domain.User;
-import kernel360.devinside.domain.user.dto.LoginRequest;
-import kernel360.devinside.domain.user.dto.LoginResponse;
-import kernel360.devinside.domain.user.dto.UserSignupRequest;
+import kernel360.devinside.domain.user.dto.*;
 import kernel360.devinside.domain.user.repository.UserRepository;
 import kernel360.devinside.domain.user.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -45,4 +43,33 @@ public class UserService {
     public User findByToken(String email) {
         return userRepository.findByEmail(email).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
+
+    @Transactional
+    public UserUpdateResponse updateNickname(Long userId, String newNickname) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        user.updateUserName(newNickname);
+        userRepository.save(user);
+
+        return new UserUpdateResponse(user.getId(), user.getNickname());
+    }
+
+    @Transactional
+    public UserPasswordUpdateResponse updatePassword(Long userId, String password, String newPassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        //비밀번호 확인
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new CustomException(ErrorCode.INVALID_PARAMETER);
+        }
+
+        user.updatePassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+
+        return new UserPasswordUpdateResponse(user.getId(), user.getPassword());
+
+    }
+
 }
