@@ -4,6 +4,7 @@ import kernel360.devinside.common.PageResponse;
 import kernel360.devinside.domain.comment.domain.Comment;
 import kernel360.devinside.domain.comment.dto.CommentRequest;
 import kernel360.devinside.domain.comment.dto.CommentResponse;
+import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
 import kernel360.devinside.domain.comment.repository.CommentRepository;
 import kernel360.devinside.domain.post.domain.Post;
 import kernel360.devinside.domain.post.repository.PostRepository;
@@ -15,12 +16,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static kernel360.devinside.domain.comment.dto.CommentResponse.fromEntity;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentService {
 
@@ -63,5 +66,14 @@ public class CommentService {
                 .toList();
 
         return PageResponse.from(content, page, size, parentPage.getTotalElements());
+    }
+
+    public void update(Long id, CommentUpdateRequest request){
+        Comment comment = repository.findById(id).orElseThrow(()-> new IllegalArgumentException("존재하지 않는 댓글입니다"));
+        comment.updateComment(request);
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
     }
 }
