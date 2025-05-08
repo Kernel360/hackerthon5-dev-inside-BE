@@ -8,6 +8,7 @@ import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
 import kernel360.devinside.domain.comment.repository.CommentRepository;
 import kernel360.devinside.domain.post.domain.Post;
 import kernel360.devinside.domain.post.repository.PostRepository;
+import kernel360.devinside.domain.user.domain.LoginUser;
 import kernel360.devinside.domain.user.domain.User;
 import kernel360.devinside.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,15 +34,15 @@ public class CommentService {
 
     //todo 추후 진짜 회원, 게시글 반영
     @Transactional
-    public void add(User user, Post post, CommentRequest request){
+    public void add(LoginUser user, Post requestPost, CommentRequest request){
 
-        User user1 = userRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("해당 회원이 없음"));
+        User loginUser = userRepository.findById(user.id()).orElseThrow(()-> new IllegalArgumentException("해당 회원이 없음"));
         Post post2 = postRepository.findById(1L).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없음"));
 
         Comment parentComment = repository.findById(request.parent().getId()).orElseThrow(()
                 -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다"));
 
-        Comment comment = new Comment(user1, post2, request);
+        Comment comment = new Comment(loginUser, post2, request);
 
         parentComment.addChild(comment);
 

@@ -6,9 +6,11 @@ import kernel360.devinside.domain.comment.dto.CommentResponse;
 import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
 import kernel360.devinside.domain.comment.service.CommentService;
 import kernel360.devinside.domain.post.domain.Post;
+import kernel360.devinside.domain.user.domain.LoginUser;
 import kernel360.devinside.domain.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<String> createComment(
-            User user,
+            @AuthenticationPrincipal LoginUser user,
             Post post,
             @RequestBody @Validated CommentRequest request) {
         commentService.add(user, post, request);
