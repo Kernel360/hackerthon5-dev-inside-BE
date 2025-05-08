@@ -1,9 +1,6 @@
 package kernel360.devinside.domain.comment.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import kernel360.devinside.common.BaseEntity;
 import kernel360.devinside.domain.comment.dto.CommentRequest;
 import kernel360.devinside.domain.comment.dto.CommentUpdateRequest;
@@ -12,6 +9,9 @@ import kernel360.devinside.domain.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,9 +26,14 @@ public class Comment extends BaseEntity {
     @JoinColumn(nullable = false, name = "post_id")
     private Post post;
 
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Comment parent;
 
-    private Long level;
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> children = new ArrayList<>();
+
+    private String content;
 
     private boolean liked;
 
@@ -37,13 +42,17 @@ public class Comment extends BaseEntity {
     public Comment(User user, Post post, CommentRequest request) {
         this.user = user;
         this.post = post;
+        this.parent =request.parent();
         this.content = request.content();
-        this.level = request.level();
         this.liked = false;
         this.hated = false;
     }
 
     public void updateComment(CommentUpdateRequest request) {
         this.content = request.content();
+    }
+
+    public void addChild(Comment child) {
+        children.add(child);
     }
 }
