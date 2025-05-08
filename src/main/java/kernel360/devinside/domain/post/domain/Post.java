@@ -19,6 +19,10 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private PostCategory postCategory;
+
     private String title;
 
     private String content;
@@ -28,4 +32,17 @@ public class Post extends BaseEntity {
     private boolean liked;
 
     private boolean hated;
+
+    public void updateTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
+    public void updateContent(String newContent) {
+        this.content = newContent;
+    }
+
+    public void increaseView() {
+        this.view++;
+    }
+
 }

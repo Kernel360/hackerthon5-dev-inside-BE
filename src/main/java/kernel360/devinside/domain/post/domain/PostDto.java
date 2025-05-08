@@ -14,6 +14,8 @@ public class PostDto {
 
     private Long userId;
 
+    private PostCategory postCategory;
+
     private String title;
 
     private String content;
@@ -23,4 +25,5 @@ public class PostDto {
     private boolean liked;
 
     private boolean hated;
+
 }
