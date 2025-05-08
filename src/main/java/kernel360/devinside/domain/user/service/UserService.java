@@ -2,6 +2,7 @@ package kernel360.devinside.domain.user.service;
 
 import kernel360.devinside.common.exception.CustomException;
 import kernel360.devinside.common.exception.ErrorCode;
+import kernel360.devinside.domain.user.domain.LoginUser;
 import kernel360.devinside.domain.user.domain.User;
 import kernel360.devinside.domain.user.dto.*;
 import kernel360.devinside.domain.user.repository.UserRepository;
@@ -40,6 +41,14 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
+    public void delete(LoginUser loginUser) {
+        User user = userRepository.findById(loginUser.id())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        userRepository.delete(user);
+    }
+
     public User findByToken(String email) {
         return userRepository.findByEmail(email).orElseThrow(()-> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
@@ -71,5 +80,6 @@ public class UserService {
         return new UserPasswordUpdateResponse(user.getId(), user.getPassword());
 
     }
+
 
 }
