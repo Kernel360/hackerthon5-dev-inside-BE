@@ -1,8 +1,6 @@
 package kernel360.devinside.domain.post.exception;
 
 import kernel360.devinside.domain.post.controller.PostController;
-import kernel360.devinside.domain.post.domain.Post;
-import kernel360.devinside.domain.post.domain.PostResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

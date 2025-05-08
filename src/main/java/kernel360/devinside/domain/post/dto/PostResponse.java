@@ -1,4 +1,4 @@
-package kernel360.devinside.domain.post.domain;
+package kernel360.devinside.domain.post.dto;
 
 import lombok.*;
 

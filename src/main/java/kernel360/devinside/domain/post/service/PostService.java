@@ -3,6 +3,9 @@ package kernel360.devinside.domain.post.service;
 
 import jakarta.transaction.Transactional;
 import kernel360.devinside.domain.post.domain.*;
+import kernel360.devinside.domain.post.dto.Pagination;
+import kernel360.devinside.domain.post.dto.PostRequest;
+import kernel360.devinside.domain.post.dto.PostResponse;
 import kernel360.devinside.domain.post.exception.PostNotFoundException;
 import kernel360.devinside.domain.post.repository.PostRepository;
 import kernel360.devinside.domain.user.repository.UserRepository;

@@ -1,6 +1,6 @@
-package kernel360.devinside.domain.post.domain;
+package kernel360.devinside.domain.post.dto;
 
-import kernel360.devinside.domain.user.domain.User;
+import kernel360.devinside.domain.post.domain.PostCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
