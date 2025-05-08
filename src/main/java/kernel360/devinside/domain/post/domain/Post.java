@@ -1,5 +1,6 @@
 package kernel360.devinside.domain.post.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import kernel360.devinside.common.BaseEntity;
 import kernel360.devinside.domain.user.domain.User;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
     @Enumerated(EnumType.STRING)
