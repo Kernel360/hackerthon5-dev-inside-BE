@@ -21,9 +21,8 @@
 
 ## 📦 Project Service
 
-### 게시글 CRUD
-- 게시물 등록/수정/삭제
-- 스프링 시큐리티 기반 jwt 토큰 인증
+### 게시글 
+- 게시물 CRUD
 
 ### 인증 인가
 - Spring Security + jwt
